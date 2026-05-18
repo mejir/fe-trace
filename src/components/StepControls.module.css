@@ -70,36 +70,45 @@
 /* レスポンシブ */
 @media (max-width: 768px) {
   .controlsBar {
-    flex-wrap: wrap; /* 2段構成にするためwrapに変更 */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: auto auto auto;
     gap: 4px;
     padding: 6px 8px;
   }
 
-  .stepButton {
-    flex: 1;
-    padding: 8px 4px;
-    font-size: 0.8rem;
-    min-width: 0;
-  }
-
   .stepInfo {
-    order: -2; /* 上段に配置 */
+    grid-column: 1 / -1;
+    grid-row: 1;
     width: 100%;
-    padding: 0 6px;
+    padding: 0;
     font-size: 0.75rem;
     text-align: center;
   }
 
   .logMessage {
-    display: block; /* ログ表示を復活 */
-    order: -1; /* 上段に配置 */
+    display: block;
+    grid-column: 1 / -1;
+    grid-row: 2;
     width: 100%;
     max-width: none;
     text-align: center;
-    padding: 2px 0 4px 0;
+    padding: 2px 0 6px 0;
     font-size: 0.75rem;
-    white-space: normal; /* テキストが長い場合に折り返す */
+    white-space: normal;
     overflow: visible;
+  }
+
+  .controlsBar > button:nth-of-type(1) { grid-column: 1; grid-row: 3; }
+  .controlsBar > button:nth-of-type(2) { grid-column: 2; grid-row: 3; }
+  .controlsBar > button:nth-of-type(3) { grid-column: 3; grid-row: 3; }
+  .controlsBar > button:nth-of-type(4) { grid-column: 4; grid-row: 3; }
+
+  .stepButton {
+    width: 100%;
+    padding: 8px 4px;
+    font-size: 0.8rem;
+    min-width: 0;
   }
 
   .btnText {
