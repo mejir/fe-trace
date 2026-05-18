@@ -1,0 +1,65 @@
+/* ============================================================
+   CodeViewer - 擬似言語コード表示コンポーネント
+   ============================================================ */
+
+.codeViewer {
+  font-family: var(--font-mono);
+  font-size: 14px;
+  line-height: 1.7;
+  overflow-x: auto;
+  overflow-y: auto;
+  max-height: calc(100vh - 200px);
+}
+
+.codeLine {
+  display: flex;
+  align-items: stretch;
+  min-height: 28px;
+  transition: background-color 0.15s ease;
+}
+
+.codeLine:hover {
+  background-color: var(--color-surface-hover);
+}
+
+.currentLine {
+  background-color: var(--color-primary-light) !important;
+}
+
+.lineNumber {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  width: 40px;
+  min-width: 40px;
+  padding: 0 10px 0 8px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+  user-select: none;
+  border-right: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.lineContent {
+  display: flex;
+  align-items: center;
+  padding: 0 12px;
+  white-space: pre;
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .codeViewer {
+    font-size: 13px;
+  }
+  
+  .lineNumber {
+    width: 32px;
+    min-width: 32px;
+    padding: 0 6px;
+  }
+
+  .lineContent {
+    padding: 0 8px;
+  }
+}

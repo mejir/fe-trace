@@ -1,0 +1,64 @@
+/* ============================================================
+   TraceTable - 変数トレース表
+   ============================================================ */
+
+.tableWrapper {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.traceTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.traceTable th {
+  text-align: left;
+  padding: 8px 12px;
+  font-weight: 600;
+  font-size: 0.75rem;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  background: var(--color-bg);
+  border-bottom: 1px solid var(--color-border);
+}
+
+.traceTable td {
+  padding: 6px 12px;
+  border-bottom: 1px solid var(--color-border);
+  font-family: var(--font-mono);
+  font-size: 0.8125rem;
+  transition: background-color 0.2s ease;
+}
+
+.traceTable tr:last-child td {
+  border-bottom: none;
+}
+
+.varName {
+  font-weight: 500;
+  color: var(--color-text);
+}
+
+.varValue {
+  color: var(--color-primary);
+  font-weight: 500;
+}
+
+.undefinedValue {
+  color: var(--color-text-muted);
+  font-style: italic;
+}
+
+.changedRow {
+  background-color: var(--color-highlight) !important;
+}
+
+.emptyState {
+  padding: 20px;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+}

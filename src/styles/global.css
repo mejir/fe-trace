@@ -1,0 +1,219 @@
+/* ============================================================
+   FE-Trace グローバルスタイル
+   CBT 風の清潔感あるデザイン
+   ============================================================ */
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+/* --- CSS カスタムプロパティ --- */
+:root {
+  /* カラーパレット */
+  --color-bg: #f8fafc;
+  --color-surface: #ffffff;
+  --color-surface-hover: #f1f5f9;
+  --color-border: #e2e8f0;
+  --color-border-strong: #cbd5e1;
+  --color-text: #1e293b;
+  --color-text-secondary: #64748b;
+  --color-text-muted: #94a3b8;
+  --color-primary: #2563eb;
+  --color-primary-hover: #1d4ed8;
+  --color-primary-light: #dbeafe;
+  --color-highlight: #fef08a;
+  --color-highlight-strong: #fde047;
+  --color-success: #22c55e;
+  --color-warning: #f59e0b;
+  --color-danger: #ef4444;
+  --color-easy: #22c55e;
+  --color-medium: #f59e0b;
+  --color-hard: #ef4444;
+
+  /* タイポグラフィ */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  --font-mono: 'JetBrains Mono', 'Fira Code', 'Cascadia Code', monospace;
+
+  /* サイズ */
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -1px rgba(0, 0, 0, 0.04);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -2px rgba(0, 0, 0, 0.04);
+}
+
+/* --- リセット --- */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-sans);
+  color: var(--color-text);
+  background-color: var(--color-bg);
+  line-height: 1.6;
+  min-height: 100vh;
+}
+
+/* --- ヘッダー --- */
+.app-header {
+  background: var(--color-surface);
+  border-bottom: 1px solid var(--color-border);
+  padding: 12px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: var(--shadow-sm);
+}
+
+.app-header h1 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.app-header h1 .logo-icon {
+  font-size: 1.5rem;
+}
+
+.back-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 14px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.back-button:hover {
+  color: var(--color-text);
+  border-color: var(--color-border-strong);
+  background: var(--color-surface-hover);
+}
+
+/* --- メインレイアウト --- */
+.app-main {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+/* --- トレース画面レイアウト --- */
+.trace-layout {
+  display: grid;
+  grid-template-columns: 1fr 320px;
+  grid-template-rows: auto 1fr;
+  gap: 16px;
+  min-height: calc(100vh - 120px);
+}
+
+.trace-layout .code-section {
+  grid-column: 1;
+  grid-row: 1 / 3;
+}
+
+.trace-layout .vars-section {
+  grid-column: 2;
+  grid-row: 1;
+}
+
+.trace-layout .arrays-section {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.trace-controls-bar {
+  grid-column: 1 / -1;
+  position: sticky;
+  bottom: 0;
+  z-index: 50;
+}
+
+/* --- パネル共通 --- */
+.panel {
+  background: var(--color-surface);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+}
+
+.panel-header {
+  padding: 10px 16px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 1px solid var(--color-border);
+  background: var(--color-bg);
+}
+
+.panel-body {
+  padding: 0;
+}
+
+/* --- エラー表示 --- */
+.error-banner {
+  margin: 16px 0;
+  padding: 12px 16px;
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  border-radius: var(--radius-md);
+  color: var(--color-danger);
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+/* --- レスポンシブ --- */
+@media (max-width: 768px) {
+  .app-header {
+    padding: 10px 16px;
+  }
+
+  .app-main {
+    padding: 12px;
+  }
+
+  .trace-layout {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+    gap: 12px;
+  }
+
+  .trace-layout .code-section {
+    grid-column: 1;
+    grid-row: 1;
+  }
+
+  .trace-layout .vars-section {
+    grid-column: 1;
+    grid-row: 2;
+  }
+
+  .trace-layout .arrays-section {
+    grid-column: 1;
+    grid-row: 3;
+  }
+}

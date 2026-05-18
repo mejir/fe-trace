@@ -1,0 +1,88 @@
+/* ============================================================
+   ArrayViewer - 配列の視覚表示
+   ============================================================ */
+
+.arrayViewerContainer {
+  padding: 12px 16px;
+}
+
+.arraySection {
+  margin-bottom: 16px;
+}
+
+.arraySection:last-child {
+  margin-bottom: 0;
+}
+
+.arrayName {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: var(--color-text-secondary);
+  margin-bottom: 8px;
+  font-family: var(--font-mono);
+}
+
+.arrayGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+}
+
+.arrayCell {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 36px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  overflow: hidden;
+  transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+.cellIndex {
+  font-size: 10px;
+  color: var(--color-text-muted);
+  padding: 2px 6px;
+  background: var(--color-bg);
+  width: 100%;
+  text-align: center;
+  border-bottom: 1px solid var(--color-border);
+  font-family: var(--font-mono);
+}
+
+.cellValue {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text);
+  padding: 4px 8px;
+  font-family: var(--font-mono);
+  min-height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.changedCell {
+  background-color: var(--color-highlight) !important;
+  border-color: var(--color-highlight-strong) !important;
+}
+
+.changedCell .cellValue {
+  font-weight: 700;
+  color: var(--color-text);
+}
+
+.emptyState {
+  padding: 20px;
+  text-align: center;
+  color: var(--color-text-muted);
+  font-size: 0.8125rem;
+}
+
+@media (max-width: 768px) {
+  .arrayGrid {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 8px; /* スクロールバー用の余白 */
+  }
+}
