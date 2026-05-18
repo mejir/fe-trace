@@ -64,7 +64,7 @@ export function StepControls({
         title="最初に戻る (Home)"
         id="btn-first"
       >
-        |◀ 最初
+        |◀ <span className={styles.btnText}>最初</span>
       </button>
       <button
         className={styles.stepButton}
@@ -73,7 +73,7 @@ export function StepControls({
         title="前のステップ (←)"
         id="btn-prev"
       >
-        ◀ 前へ
+        ◀ <span className={styles.btnText}>前へ</span>
       </button>
 
       <span className={styles.stepInfo}>
@@ -87,7 +87,7 @@ export function StepControls({
         title="次のステップ (→)"
         id="btn-next"
       >
-        次へ ▶
+        <span className={styles.btnText}>次へ</span> ▶
       </button>
       <button
         className={styles.stepButton}
@@ -96,7 +96,7 @@ export function StepControls({
         title="最後まで (End)"
         id="btn-last"
       >
-        最後 ▶|
+        <span className={styles.btnText}>最後</span> ▶|
       </button>
 
       {log && <span className={styles.logMessage} title={log}>{log}</span>}

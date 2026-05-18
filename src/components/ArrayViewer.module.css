@@ -80,9 +80,28 @@
 }
 
 @media (max-width: 768px) {
+  .arrayViewerContainer {
+    padding: 6px 8px;
+  }
+
   .arrayGrid {
     flex-wrap: nowrap;
     overflow-x: auto;
     padding-bottom: 8px; /* スクロールバー用の余白 */
+  }
+
+  .arrayCell {
+    min-width: 30px;
+  }
+
+  .cellIndex {
+    font-size: 9px;
+    padding: 1px 4px;
+  }
+
+  .cellValue {
+    font-size: 0.75rem;
+    padding: 2px 4px;
+    min-height: 24px;
   }
 }

@@ -62,3 +62,10 @@
   color: var(--color-text-muted);
   font-size: 0.8125rem;
 }
+
+@media (max-width: 768px) {
+  .traceTable th, .traceTable td {
+    padding: 4px 8px;
+    font-size: 0.75rem;
+  }
+}

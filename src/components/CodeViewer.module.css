@@ -50,16 +50,24 @@
 
 @media (max-width: 768px) {
   .codeViewer {
-    font-size: 13px;
+    font-size: 11px;
+    line-height: 1.5;
+    height: 100%;
+    max-height: none;
   }
   
+  .codeLine {
+    min-height: 20px;
+  }
+
   .lineNumber {
-    width: 32px;
-    min-width: 32px;
-    padding: 0 6px;
+    width: 28px;
+    min-width: 28px;
+    padding: 0 4px;
+    font-size: 10px;
   }
 
   .lineContent {
-    padding: 0 8px;
+    padding: 0 6px;
   }
 }

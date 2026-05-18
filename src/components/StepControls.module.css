@@ -70,29 +70,31 @@
 /* レスポンシブ */
 @media (max-width: 768px) {
   .controlsBar {
-    flex-wrap: wrap;
-    gap: 8px;
-    padding: 12px;
+    flex-wrap: nowrap;
+    gap: 4px;
+    padding: 6px 8px;
   }
 
   .stepButton {
     flex: 1;
-    padding: 10px 8px;
-    font-size: 0.875rem;
+    padding: 8px 4px;
+    font-size: 0.8rem;
+    min-width: 0;
   }
 
   .stepInfo {
-    width: 100%;
-    order: -2;
-    padding: 4px 0;
+    order: 0;
+    width: auto;
+    padding: 0 6px;
+    font-size: 0.75rem;
+    min-width: 60px;
   }
 
   .logMessage {
-    order: -1;
-    width: 100%;
-    max-width: none;
-    text-align: center;
-    padding: 4px 0;
-    font-size: 0.75rem;
+    display: none; /* スマホではログは隠す */
+  }
+
+  .btnText {
+    display: none;
   }
 }
