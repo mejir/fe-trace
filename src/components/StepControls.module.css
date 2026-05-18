@@ -70,7 +70,7 @@
 /* レスポンシブ */
 @media (max-width: 768px) {
   .controlsBar {
-    flex-wrap: nowrap;
+    flex-wrap: wrap; /* 2段構成にするためwrapに変更 */
     gap: 4px;
     padding: 6px 8px;
   }
@@ -83,15 +83,23 @@
   }
 
   .stepInfo {
-    order: 0;
-    width: auto;
+    order: -2; /* 上段に配置 */
+    width: 100%;
     padding: 0 6px;
     font-size: 0.75rem;
-    min-width: 60px;
+    text-align: center;
   }
 
   .logMessage {
-    display: none; /* スマホではログは隠す */
+    display: block; /* ログ表示を復活 */
+    order: -1; /* 上段に配置 */
+    width: 100%;
+    max-width: none;
+    text-align: center;
+    padding: 2px 0 4px 0;
+    font-size: 0.75rem;
+    white-space: normal; /* テキストが長い場合に折り返す */
+    overflow: visible;
   }
 
   .btnText {
