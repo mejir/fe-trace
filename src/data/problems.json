@@ -1,0 +1,1642 @@
+{
+  "batchId": "fe-trace-batch-001",
+  "createdBy": "claude-opus-4-7",
+  "createdAt": "2026-05-21",
+  "problemCount": 30,
+  "notes": [
+    "全問とも『プログラム実行後の戻り値（または変数の値）を選ぶ』出力予測型。穴埋め型は含まない。",
+    "擬似言語はIPA基本情報技術者試験 科目B の公式仕様に準拠（演算子: ← × ÷ % ≠ ≤ ≥、配列は1始まり、'arrの要素数' で長さ取得）。",
+    "FE-Traceのパーサが × ÷ ≠ ≤ ≥ などの非ASCII記号に未対応の場合、find-replaceで * / != <= >= に置換してください。",
+    "logical operator は and / or / not を使用。これらのトークンが未対応なら && || ! に置換が必要。",
+    "Phase 0 で実装範囲を確定したのち、`npm run validate:problems` で全問通すこと。落ちた問題は本ファイルに記録してClaudeに修正依頼してください。"
+  ],
+  "problems": [
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0001",
+      "source": "generated",
+      "meta": {
+        "title": "配列要素の総和",
+        "category": "array",
+        "difficulty": 1,
+        "estimatedMinutes": 3,
+        "tags": ["配列", "ループ", "累積和"],
+        "syntaxFeatures": ["for", "array", "assignment"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve を実行したとき、戻り値はいくつになるか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {3, 1, 4, 1, 5, 9, 2, 6}",
+          "  整数型: i, total",
+          "  total ← 0",
+          "  for (i を 1 から arrの要素数 まで 1 ずつ増やす)",
+          "    total ← total + arr[i]",
+          "  endfor",
+          "  return total"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "25"},
+            {"id": "イ", "text": "28"},
+            {"id": "ウ", "text": "31"},
+            {"id": "エ", "text": "34"}
+          ],
+          "answer": "ウ",
+          "explanation": "配列の全要素を順に total に加算する。3+1+4+1+5+9+2+6 = 31。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "total": 31 } },
+        "expectedTraceLength": { "min": 8, "max": 30 }
+      },
+      "explanation": {
+        "summary": "配列の全要素を順に加算する基本的な累積パターン。total を 0 で初期化することと、ループ範囲を 1〜要素数 とすることがポイント。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0002",
+      "source": "generated",
+      "meta": {
+        "title": "配列の最大値",
+        "category": "array",
+        "difficulty": 1,
+        "estimatedMinutes": 3,
+        "tags": ["配列", "最大値", "条件分岐"],
+        "syntaxFeatures": ["for", "if", "array", "comparison"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve を実行したとき、戻り値はいくつになるか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {5, 8, 3, 9, 2, 7}",
+          "  整数型: i, maxVal",
+          "  maxVal ← arr[1]",
+          "  for (i を 2 から arrの要素数 まで 1 ずつ増やす)",
+          "    if (arr[i] > maxVal)",
+          "      maxVal ← arr[i]",
+          "    endif",
+          "  endfor",
+          "  return maxVal"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "5"},
+            {"id": "イ", "text": "8"},
+            {"id": "ウ", "text": "9"},
+            {"id": "エ", "text": "7"}
+          ],
+          "answer": "ウ",
+          "explanation": "先頭要素を初期最大値として、各要素と比較し大きければ更新する。最大値は arr[4] = 9。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "maxVal": 9 } },
+        "expectedTraceLength": { "min": 6, "max": 25 }
+      },
+      "explanation": {
+        "summary": "最大値探索の定番パターン。初期値を配列先頭にすることで『初回比較』の問題を回避できる。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0003",
+      "source": "generated",
+      "meta": {
+        "title": "配列の最小値",
+        "category": "array",
+        "difficulty": 1,
+        "estimatedMinutes": 3,
+        "tags": ["配列", "最小値", "条件分岐"],
+        "syntaxFeatures": ["for", "if", "array", "comparison"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve を実行したとき、戻り値はいくつになるか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {4, 7, 2, 9, 1, 6}",
+          "  整数型: i, minVal",
+          "  minVal ← arr[1]",
+          "  for (i を 2 から arrの要素数 まで 1 ずつ増やす)",
+          "    if (arr[i] < minVal)",
+          "      minVal ← arr[i]",
+          "    endif",
+          "  endfor",
+          "  return minVal"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "1"},
+            {"id": "イ", "text": "2"},
+            {"id": "ウ", "text": "4"},
+            {"id": "エ", "text": "9"}
+          ],
+          "answer": "ア",
+          "explanation": "最大値探索の反対パターン。先頭を初期値として、より小さい値が見つかれば更新。最小は arr[5] = 1。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "minVal": 1 } },
+        "expectedTraceLength": { "min": 6, "max": 25 }
+      },
+      "explanation": {
+        "summary": "最小値探索。最大値探索と対称構造なので、比較演算子の向きだけ変わる点を意識する。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0004",
+      "source": "generated",
+      "meta": {
+        "title": "偶数の個数カウント",
+        "category": "array",
+        "difficulty": 1,
+        "estimatedMinutes": 3,
+        "tags": ["配列", "カウント", "剰余演算"],
+        "syntaxFeatures": ["for", "if", "array", "modulo"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve を実行したとき、戻り値はいくつになるか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {1, 2, 3, 4, 5, 6, 7, 8}",
+          "  整数型: i, count",
+          "  count ← 0",
+          "  for (i を 1 から arrの要素数 まで 1 ずつ増やす)",
+          "    if (arr[i] % 2 = 0)",
+          "      count ← count + 1",
+          "    endif",
+          "  endfor",
+          "  return count"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "3"},
+            {"id": "イ", "text": "4"},
+            {"id": "ウ", "text": "5"},
+            {"id": "エ", "text": "8"}
+          ],
+          "answer": "イ",
+          "explanation": "% 2 = 0 で偶数判定。配列中の偶数は 2, 4, 6, 8 の 4 個。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "count": 4 } },
+        "expectedTraceLength": { "min": 8, "max": 30 }
+      },
+      "explanation": {
+        "summary": "条件カウントパターン。剰余演算（%）を使った偶奇判定は頻出。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0005",
+      "source": "generated",
+      "meta": {
+        "title": "1からNまでの合計",
+        "category": "loop",
+        "difficulty": 1,
+        "estimatedMinutes": 2,
+        "tags": ["ループ", "累積和"],
+        "syntaxFeatures": ["for", "assignment"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve を実行したとき、戻り値はいくつになるか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型: n ← 10",
+          "  整数型: i, sum",
+          "  sum ← 0",
+          "  for (i を 1 から n まで 1 ずつ増やす)",
+          "    sum ← sum + i",
+          "  endfor",
+          "  return sum"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "45"},
+            {"id": "イ", "text": "50"},
+            {"id": "ウ", "text": "55"},
+            {"id": "エ", "text": "100"}
+          ],
+          "answer": "ウ",
+          "explanation": "1+2+...+10 = 55。公式 n(n+1)/2 = 10×11/2 = 55。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "sum": 55 } },
+        "expectedTraceLength": { "min": 10, "max": 30 }
+      },
+      "explanation": {
+        "summary": "等差数列の和。等差和の公式 n(n+1)/2 を覚えておくと検算が早い。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0006",
+      "source": "generated",
+      "meta": {
+        "title": "階乗の計算",
+        "category": "loop",
+        "difficulty": 1,
+        "estimatedMinutes": 2,
+        "tags": ["ループ", "階乗", "累積積"],
+        "syntaxFeatures": ["for", "multiplication"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve を実行したとき、戻り値はいくつになるか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型: n ← 5",
+          "  整数型: i, result",
+          "  result ← 1",
+          "  for (i を 1 から n まで 1 ずつ増やす)",
+          "    result ← result × i",
+          "  endfor",
+          "  return result"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "60"},
+            {"id": "イ", "text": "100"},
+            {"id": "ウ", "text": "120"},
+            {"id": "エ", "text": "720"}
+          ],
+          "answer": "ウ",
+          "explanation": "5! = 1×2×3×4×5 = 120。result の初期値を 1 にする点に注意（0 だと永遠に 0 のまま）。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "result": 120 } },
+        "expectedTraceLength": { "min": 5, "max": 20 }
+      },
+      "explanation": {
+        "summary": "累積積の典型。初期値を 1 にすることが累積積の重要ポイント。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0007",
+      "source": "generated",
+      "meta": {
+        "title": "配列の平均値",
+        "category": "array",
+        "difficulty": 1,
+        "estimatedMinutes": 3,
+        "tags": ["配列", "平均", "除算"],
+        "syntaxFeatures": ["for", "array", "division"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve を実行したとき、戻り値はいくつになるか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {10, 20, 30, 40, 50}",
+          "  整数型: i, sum, avg",
+          "  sum ← 0",
+          "  for (i を 1 から arrの要素数 まで 1 ずつ増やす)",
+          "    sum ← sum + arr[i]",
+          "  endfor",
+          "  avg ← sum ÷ arrの要素数",
+          "  return avg"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "25"},
+            {"id": "イ", "text": "30"},
+            {"id": "ウ", "text": "35"},
+            {"id": "エ", "text": "150"}
+          ],
+          "answer": "イ",
+          "explanation": "合計 150 を要素数 5 で割って 30。整数除算なので注意（要素数で割り切れない場合は切り捨て）。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "sum": 150, "avg": 30 } },
+        "expectedTraceLength": { "min": 7, "max": 25 }
+      },
+      "explanation": {
+        "summary": "総和を要素数で割って平均を出す。整数除算（÷）は商のみ返す点に注意。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0008",
+      "source": "generated",
+      "meta": {
+        "title": "累乗の計算（while）",
+        "category": "loop",
+        "difficulty": 1,
+        "estimatedMinutes": 3,
+        "tags": ["while", "累乗"],
+        "syntaxFeatures": ["while", "multiplication"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve を実行したとき、戻り値はいくつになるか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型: base ← 2",
+          "  整数型: exp ← 10",
+          "  整数型: result ← 1",
+          "  整数型: i ← 0",
+          "  while (i < exp)",
+          "    result ← result × base",
+          "    i ← i + 1",
+          "  endwhile",
+          "  return result"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "512"},
+            {"id": "イ", "text": "1024"},
+            {"id": "ウ", "text": "2048"},
+            {"id": "エ", "text": "100"}
+          ],
+          "answer": "イ",
+          "explanation": "2 を 10 回掛ける。2^10 = 1024。while ループのカウンタ i は 0 始まりで、i < exp の間繰り返すので 10 回。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "result": 1024, "i": 10 } },
+        "expectedTraceLength": { "min": 10, "max": 35 }
+      },
+      "explanation": {
+        "summary": "while ループでの累乗。ループ回数（i が 0 から exp-1 まで、計 exp 回）を間違えやすい。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0009",
+      "source": "generated",
+      "meta": {
+        "title": "特定値の出現回数",
+        "category": "array",
+        "difficulty": 1,
+        "estimatedMinutes": 3,
+        "tags": ["配列", "カウント"],
+        "syntaxFeatures": ["for", "if", "array", "comparison"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve を実行したとき、戻り値はいくつになるか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {1, 3, 2, 3, 5, 3, 4, 3}",
+          "  整数型: target ← 3",
+          "  整数型: i, count",
+          "  count ← 0",
+          "  for (i を 1 から arrの要素数 まで 1 ずつ増やす)",
+          "    if (arr[i] = target)",
+          "      count ← count + 1",
+          "    endif",
+          "  endfor",
+          "  return count"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "2"},
+            {"id": "イ", "text": "3"},
+            {"id": "ウ", "text": "4"},
+            {"id": "エ", "text": "5"}
+          ],
+          "answer": "ウ",
+          "explanation": "配列内の 3 は位置 2, 4, 6, 8 の 4 か所に出現する。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "count": 4 } },
+        "expectedTraceLength": { "min": 8, "max": 25 }
+      },
+      "explanation": {
+        "summary": "等価判定（=）によるカウント。条件カウントは for + if + counter のセットで頻出。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0010",
+      "source": "generated",
+      "meta": {
+        "title": "配列の反転",
+        "category": "array",
+        "difficulty": 1,
+        "estimatedMinutes": 4,
+        "tags": ["配列", "反転", "swap"],
+        "syntaxFeatures": ["for", "array", "assignment"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve を実行したとき、戻り値はいくつになるか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {1, 2, 3, 4, 5}",
+          "  整数型: i, temp, n",
+          "  n ← arrの要素数",
+          "  for (i を 1 から n ÷ 2 まで 1 ずつ増やす)",
+          "    temp ← arr[i]",
+          "    arr[i] ← arr[n - i + 1]",
+          "    arr[n - i + 1] ← temp",
+          "  endfor",
+          "  return arr[1]"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値（反転後の arr[1]）はどれか。",
+          "choices": [
+            {"id": "ア", "text": "1"},
+            {"id": "イ", "text": "3"},
+            {"id": "ウ", "text": "5"},
+            {"id": "エ", "text": "4"}
+          ],
+          "answer": "ウ",
+          "explanation": "配列を両端からswapして反転する。{1,2,3,4,5} → {5,4,3,2,1}。中央 arr[3]=3 は動かない。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "n": 5 } },
+        "expectedTraceLength": { "min": 6, "max": 25 }
+      },
+      "explanation": {
+        "summary": "配列の反転（in-place）。ループは n÷2 まで（半分まで）回せば全要素が反転する。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0011",
+      "source": "generated",
+      "meta": {
+        "title": "最大公約数（ユークリッド互除法）",
+        "category": "loop",
+        "difficulty": 1,
+        "estimatedMinutes": 4,
+        "tags": ["GCD", "while", "剰余演算"],
+        "syntaxFeatures": ["while", "modulo", "comparison"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve を実行したとき、戻り値はいくつになるか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型: a ← 48",
+          "  整数型: b ← 18",
+          "  整数型: temp",
+          "  while (b ≠ 0)",
+          "    temp ← b",
+          "    b ← a % b",
+          "    a ← temp",
+          "  endwhile",
+          "  return a"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "2"},
+            {"id": "イ", "text": "3"},
+            {"id": "ウ", "text": "6"},
+            {"id": "エ", "text": "9"}
+          ],
+          "answer": "ウ",
+          "explanation": "ユークリッド互除法: 48%18=12 → 18%12=6 → 12%6=0 で終了。GCD(48,18)=6。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "a": 6, "b": 0 } },
+        "expectedTraceLength": { "min": 4, "max": 20 }
+      },
+      "explanation": {
+        "summary": "ユークリッド互除法。a と b を入れ替えながら剰余を更新し、b が 0 になったときの a が最大公約数。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0012",
+      "source": "generated",
+      "meta": {
+        "title": "配列要素の積",
+        "category": "array",
+        "difficulty": 1,
+        "estimatedMinutes": 2,
+        "tags": ["配列", "累積積"],
+        "syntaxFeatures": ["for", "array", "multiplication"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve を実行したとき、戻り値はいくつになるか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {2, 3, 4, 5}",
+          "  整数型: i, product",
+          "  product ← 1",
+          "  for (i を 1 から arrの要素数 まで 1 ずつ増やす)",
+          "    product ← product × arr[i]",
+          "  endfor",
+          "  return product"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "14"},
+            {"id": "イ", "text": "60"},
+            {"id": "ウ", "text": "120"},
+            {"id": "エ", "text": "240"}
+          ],
+          "answer": "ウ",
+          "explanation": "2×3×4×5 = 120。product の初期値が 1 である点に注意。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "product": 120 } },
+        "expectedTraceLength": { "min": 4, "max": 20 }
+      },
+      "explanation": {
+        "summary": "累積積パターン。総和（初期 0）と総積（初期 1）の対比を意識すると忘れにくい。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0013",
+      "source": "generated",
+      "meta": {
+        "title": "線形探索（番兵なし）",
+        "category": "search",
+        "difficulty": 2,
+        "estimatedMinutes": 4,
+        "tags": ["探索", "線形探索"],
+        "syntaxFeatures": ["for", "if", "array", "comparison"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve は配列 arr から target を探し、見つかった位置（インデックス）を返す。戻り値はいくつになるか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {7, 2, 9, 4, 6, 1, 8}",
+          "  整数型: target ← 6",
+          "  整数型: i, result",
+          "  result ← -1",
+          "  for (i を 1 から arrの要素数 まで 1 ずつ増やす)",
+          "    if (arr[i] = target)",
+          "      result ← i",
+          "    endif",
+          "  endfor",
+          "  return result"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "-1"},
+            {"id": "イ", "text": "4"},
+            {"id": "ウ", "text": "5"},
+            {"id": "エ", "text": "6"}
+          ],
+          "answer": "ウ",
+          "explanation": "arr[5] = 6 なので result に 5 が代入される。なお、このコードは見つかっても抜けないので最後にマッチした位置を返す点に注意。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "result": 5 } },
+        "expectedTraceLength": { "min": 7, "max": 25 }
+      },
+      "explanation": {
+        "summary": "線形探索の最も単純な形。早期終了しないため、配列の最後までスキャンする。重複がある場合は最後の出現位置を返す。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0014",
+      "source": "generated",
+      "meta": {
+        "title": "番兵法による線形探索",
+        "category": "search",
+        "difficulty": 2,
+        "estimatedMinutes": 5,
+        "tags": ["探索", "番兵法"],
+        "syntaxFeatures": ["while", "array", "comparison"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve は番兵法を用いた線形探索である。target が元の配列に含まれない場合、戻り値はいくつになるか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {3, 8, 1, 9, 2, 6, 7, 0}",
+          "  整数型: target ← 5",
+          "  整数型: i ← 1",
+          "  arr[arrの要素数] ← target",
+          "  while (arr[i] ≠ target)",
+          "    i ← i + 1",
+          "  endwhile",
+          "  return i"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "1"},
+            {"id": "イ", "text": "7"},
+            {"id": "ウ", "text": "8"},
+            {"id": "エ", "text": "-1"}
+          ],
+          "answer": "ウ",
+          "explanation": "配列末尾（arr[8]）を target=5 で上書きする（番兵）。元の配列に 5 がないので、while は arr[8]=5 で停止し、i=8 が返る。番兵法の本質は『見つからない』分岐を消すこと。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "i": 8 } },
+        "expectedTraceLength": { "min": 8, "max": 25 }
+      },
+      "explanation": {
+        "summary": "番兵法は配列末尾に探索値を置くことで、ループの境界判定（i ≤ n のチェック）を省略する高速化テクニック。返値が要素数と等しければ『元配列に存在しなかった』ことを意味する。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0015",
+      "source": "generated",
+      "meta": {
+        "title": "二分探索",
+        "category": "search",
+        "difficulty": 2,
+        "estimatedMinutes": 6,
+        "tags": ["探索", "二分探索", "ソート済み配列"],
+        "syntaxFeatures": ["while", "if", "array", "logical_op"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve は昇順ソート済み配列に対する二分探索である。戻り値はいくつになるか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {2, 5, 8, 11, 14, 17, 20, 23}",
+          "  整数型: target ← 17",
+          "  整数型: low ← 1",
+          "  整数型: high ← arrの要素数",
+          "  整数型: mid, result",
+          "  論理型: found ← false",
+          "  result ← -1",
+          "  while (low ≤ high and not found)",
+          "    mid ← (low + high) ÷ 2",
+          "    if (arr[mid] = target)",
+          "      result ← mid",
+          "      found ← true",
+          "    elseif (arr[mid] < target)",
+          "      low ← mid + 1",
+          "    else",
+          "      high ← mid - 1",
+          "    endif",
+          "  endwhile",
+          "  return result"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "4"},
+            {"id": "イ", "text": "5"},
+            {"id": "ウ", "text": "6"},
+            {"id": "エ", "text": "7"}
+          ],
+          "answer": "ウ",
+          "explanation": "low=1,high=8 → mid=4, arr[4]=11<17 → low=5。low=5,high=8 → mid=6, arr[6]=17 一致。result=6。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "result": 6, "found": true } },
+        "expectedTraceLength": { "min": 6, "max": 25 }
+      },
+      "explanation": {
+        "summary": "二分探索は範囲を半分ずつ絞り込む。整数除算による mid の計算と、見つかった時の早期終了フラグの扱いがポイント。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0016",
+      "source": "generated",
+      "meta": {
+        "title": "バブルソートの1回パス",
+        "category": "sort",
+        "difficulty": 2,
+        "estimatedMinutes": 5,
+        "tags": ["ソート", "バブルソート"],
+        "syntaxFeatures": ["for", "if", "array", "swap"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve はバブルソートを1回パスだけ実行する。実行後の arr の最後尾の値はいくつか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {5, 2, 8, 1, 9, 3}",
+          "  整数型: i, temp",
+          "  for (i を 1 から arrの要素数 - 1 まで 1 ずつ増やす)",
+          "    if (arr[i] > arr[i + 1])",
+          "      temp ← arr[i]",
+          "      arr[i] ← arr[i + 1]",
+          "      arr[i + 1] ← temp",
+          "    endif",
+          "  endfor",
+          "  return arr[arrの要素数]"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値（1パス後の arr[6]）はどれか。",
+          "choices": [
+            {"id": "ア", "text": "3"},
+            {"id": "イ", "text": "8"},
+            {"id": "ウ", "text": "9"},
+            {"id": "エ", "text": "5"}
+          ],
+          "answer": "ウ",
+          "explanation": "1パス後は最大値（9）が末尾に到達する。これがバブルソートの『泡が上に来る』性質。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": {} },
+        "expectedTraceLength": { "min": 5, "max": 30 }
+      },
+      "explanation": {
+        "summary": "バブルソートの1パスでは『隣接比較&swap』を端から繰り返し、最大値が末尾に集まる。全体ソートにはこのパスを n-1 回繰り返す必要がある。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0017",
+      "source": "generated",
+      "meta": {
+        "title": "選択ソートの1回パス",
+        "category": "sort",
+        "difficulty": 2,
+        "estimatedMinutes": 5,
+        "tags": ["ソート", "選択ソート"],
+        "syntaxFeatures": ["for", "if", "array", "swap"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve は配列から最小値を見つけて先頭と入れ替える操作（選択ソートの1パス）を行う。戻り値はいくつか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {4, 7, 2, 9, 1, 6}",
+          "  整数型: i, minIdx, temp",
+          "  minIdx ← 1",
+          "  for (i を 2 から arrの要素数 まで 1 ずつ増やす)",
+          "    if (arr[i] < arr[minIdx])",
+          "      minIdx ← i",
+          "    endif",
+          "  endfor",
+          "  temp ← arr[1]",
+          "  arr[1] ← arr[minIdx]",
+          "  arr[minIdx] ← temp",
+          "  return arr[1]"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値（1パス後の arr[1]）はどれか。",
+          "choices": [
+            {"id": "ア", "text": "1"},
+            {"id": "イ", "text": "4"},
+            {"id": "ウ", "text": "2"},
+            {"id": "エ", "text": "9"}
+          ],
+          "answer": "ア",
+          "explanation": "配列の最小値は 1（位置 5）。これを先頭の 4 と swap するので、arr[1]=1 となる。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "minIdx": 5 } },
+        "expectedTraceLength": { "min": 6, "max": 25 }
+      },
+      "explanation": {
+        "summary": "選択ソートの1パスでは『未ソート部分の最小値を先頭に』を行う。バブルソートと違い、swap は1パスにつき1回だけで済む。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0018",
+      "source": "generated",
+      "meta": {
+        "title": "挿入ソート（1要素の挿入）",
+        "category": "sort",
+        "difficulty": 2,
+        "estimatedMinutes": 6,
+        "tags": ["ソート", "挿入ソート"],
+        "syntaxFeatures": ["while", "if", "array", "logical_op"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve は、すでにソート済みの先頭5要素に末尾の 5 を挿入する。挿入後、5 はどの位置に入るか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {2, 4, 6, 8, 10, 5}",
+          "  整数型: i ← 6",
+          "  整数型: temp ← arr[i]",
+          "  while (i > 1 and arr[i - 1] > temp)",
+          "    arr[i] ← arr[i - 1]",
+          "    i ← i - 1",
+          "  endwhile",
+          "  arr[i] ← temp",
+          "  return i"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値（5 が挿入された位置）はどれか。",
+          "choices": [
+            {"id": "ア", "text": "2"},
+            {"id": "イ", "text": "3"},
+            {"id": "ウ", "text": "4"},
+            {"id": "エ", "text": "5"}
+          ],
+          "answer": "イ",
+          "explanation": "5 を保存し、後ろから前へ『5 より大きい要素』を1つずつ右にずらす。10→8→6 とずれて、4 で止まる。最終的に arr[3]=5。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "i": 3, "temp": 5 } },
+        "expectedTraceLength": { "min": 5, "max": 25 }
+      },
+      "explanation": {
+        "summary": "挿入ソートの核心。挿入対象を temp に退避し、後ろから前へ大きい要素をシフトしてから空いた位置に temp を入れる。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0019",
+      "source": "generated",
+      "meta": {
+        "title": "連続部分和の最大（カダネ法）",
+        "category": "array",
+        "difficulty": 2,
+        "estimatedMinutes": 6,
+        "tags": ["配列", "動的計画法", "最大値"],
+        "syntaxFeatures": ["for", "if", "array", "comparison"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve は配列の中で『連続した部分の和』が最大になるものを求める（カダネ法）。戻り値はいくつか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {3, -2, 5, -1, 6, -4, 2}",
+          "  整数型: i, current, maxSum",
+          "  current ← arr[1]",
+          "  maxSum ← arr[1]",
+          "  for (i を 2 から arrの要素数 まで 1 ずつ増やす)",
+          "    if (current + arr[i] > arr[i])",
+          "      current ← current + arr[i]",
+          "    else",
+          "      current ← arr[i]",
+          "    endif",
+          "    if (current > maxSum)",
+          "      maxSum ← current",
+          "    endif",
+          "  endfor",
+          "  return maxSum"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "9"},
+            {"id": "イ", "text": "10"},
+            {"id": "ウ", "text": "11"},
+            {"id": "エ", "text": "13"}
+          ],
+          "answer": "ウ",
+          "explanation": "{3,-2,5,-1,6} の部分和が最大で 11。current は『今までの和をつなげる方が良いか、ここで切るか』を毎ステップ判断する。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "maxSum": 11 } },
+        "expectedTraceLength": { "min": 7, "max": 30 }
+      },
+      "explanation": {
+        "summary": "カダネ法（Kadane's algorithm）。動的計画法的アプローチで O(n) で連続最大部分和を求める。current の更新ロジックがポイント。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0020",
+      "source": "generated",
+      "meta": {
+        "title": "配列内の最初の重複値",
+        "category": "array",
+        "difficulty": 2,
+        "estimatedMinutes": 5,
+        "tags": ["配列", "二重ループ", "重複検出"],
+        "syntaxFeatures": ["for", "if", "array", "logical_op"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve は配列内で最初に重複が見つかる値を返す。戻り値はいくつか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {3, 7, 2, 5, 7, 1, 8}",
+          "  整数型: i, j, result",
+          "  result ← -1",
+          "  for (i を 1 から arrの要素数 - 1 まで 1 ずつ増やす)",
+          "    for (j を i + 1 から arrの要素数 まで 1 ずつ増やす)",
+          "      if (arr[i] = arr[j] and result = -1)",
+          "        result ← arr[i]",
+          "      endif",
+          "    endfor",
+          "  endfor",
+          "  return result"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "5"},
+            {"id": "イ", "text": "7"},
+            {"id": "ウ", "text": "2"},
+            {"id": "エ", "text": "-1"}
+          ],
+          "answer": "イ",
+          "explanation": "外側 i=2 で arr[2]=7、内側 j=5 で arr[5]=7 が一致する。これが最初に検出される重複なので result=7。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "result": 7 } },
+        "expectedTraceLength": { "min": 10, "max": 50 }
+      },
+      "explanation": {
+        "summary": "二重ループでの全ペア比較。result=-1 のチェックを入れることで、最初の重複だけを記録する（後の重複で上書きされない）。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0021",
+      "source": "generated",
+      "meta": {
+        "title": "スタック操作（push / pop）",
+        "category": "stack",
+        "difficulty": 2,
+        "estimatedMinutes": 5,
+        "tags": ["スタック", "データ構造", "LIFO"],
+        "syntaxFeatures": ["for", "array", "assignment"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve は配列で実装したスタックに 3, 5, 7 を順に push した後、1 回 pop する。pop された値はいくつか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: stack ← {0, 0, 0, 0, 0}",
+          "  整数型: top ← 0",
+          "  整数型: i, popped",
+          "  for (i を 1 から 3 まで 1 ずつ増やす)",
+          "    top ← top + 1",
+          "    stack[top] ← i × 2 + 1",
+          "  endfor",
+          "  popped ← stack[top]",
+          "  top ← top - 1",
+          "  return popped"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "3"},
+            {"id": "イ", "text": "5"},
+            {"id": "ウ", "text": "7"},
+            {"id": "エ", "text": "0"}
+          ],
+          "answer": "ウ",
+          "explanation": "i=1,2,3 で stack に 3, 5, 7 を push（top も増加）。pop は最後に入れた 7 を取り出す（LIFO）。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "popped": 7, "top": 2 } },
+        "expectedTraceLength": { "min": 8, "max": 25 }
+      },
+      "explanation": {
+        "summary": "スタックは LIFO（後入れ先出し）。配列＋top ポインタで実装するのが典型。push は top を増やしてから代入、pop は値を取ってから top を減らす。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0022",
+      "source": "generated",
+      "meta": {
+        "title": "キュー操作（enqueue / dequeue）",
+        "category": "queue",
+        "difficulty": 2,
+        "estimatedMinutes": 5,
+        "tags": ["キュー", "データ構造", "FIFO"],
+        "syntaxFeatures": ["for", "array", "assignment"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve は配列で実装したキューに 10, 20, 30 を順に enqueue した後、1 回 dequeue する。dequeue された値はいくつか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: queue ← {0, 0, 0, 0, 0}",
+          "  整数型: front ← 1",
+          "  整数型: rear ← 0",
+          "  整数型: i, dequeued",
+          "  for (i を 1 から 3 まで 1 ずつ増やす)",
+          "    rear ← rear + 1",
+          "    queue[rear] ← i × 10",
+          "  endfor",
+          "  dequeued ← queue[front]",
+          "  front ← front + 1",
+          "  return dequeued"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "10"},
+            {"id": "イ", "text": "20"},
+            {"id": "ウ", "text": "30"},
+            {"id": "エ", "text": "0"}
+          ],
+          "answer": "ア",
+          "explanation": "enqueue で 10, 20, 30 を末尾に追加し、dequeue は先頭の 10 を取り出す（FIFO）。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "dequeued": 10, "front": 2, "rear": 3 } },
+        "expectedTraceLength": { "min": 8, "max": 25 }
+      },
+      "explanation": {
+        "summary": "キューは FIFO（先入れ先出し）。front と rear の2つのポインタで先頭・末尾を管理する。スタックとの違いを意識して覚える。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0023",
+      "source": "generated",
+      "meta": {
+        "title": "範囲フィルタ（and 条件）",
+        "category": "array",
+        "difficulty": 2,
+        "estimatedMinutes": 4,
+        "tags": ["配列", "論理積", "フィルタ"],
+        "syntaxFeatures": ["for", "if", "array", "logical_op"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve は配列の中で 10 以上 30 以下の要素を数える。戻り値はいくつか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {15, 22, 8, 33, 41, 17, 9}",
+          "  整数型: i, count",
+          "  count ← 0",
+          "  for (i を 1 から arrの要素数 まで 1 ずつ増やす)",
+          "    if (arr[i] ≥ 10 and arr[i] ≤ 30)",
+          "      count ← count + 1",
+          "    endif",
+          "  endfor",
+          "  return count"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "2"},
+            {"id": "イ", "text": "3"},
+            {"id": "ウ", "text": "4"},
+            {"id": "エ", "text": "5"}
+          ],
+          "answer": "イ",
+          "explanation": "範囲内に入るのは 15, 22, 17 の 3 個。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "count": 3 } },
+        "expectedTraceLength": { "min": 7, "max": 25 }
+      },
+      "explanation": {
+        "summary": "論理積（and）による複合条件。境界値（10 と 30 ちょうど）が含まれるかは ≥ と ≤ の使い分けで決まる。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0024",
+      "source": "generated",
+      "meta": {
+        "title": "配列要素の左シフト",
+        "category": "array",
+        "difficulty": 2,
+        "estimatedMinutes": 4,
+        "tags": ["配列", "シフト操作"],
+        "syntaxFeatures": ["for", "array", "assignment"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve は配列を 1 つ左に巡回シフトする（先頭が末尾に回り込む）。実行後の arr[1] はいくつか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {1, 2, 3, 4, 5}",
+          "  整数型: i, n, first",
+          "  n ← arrの要素数",
+          "  first ← arr[1]",
+          "  for (i を 1 から n - 1 まで 1 ずつ増やす)",
+          "    arr[i] ← arr[i + 1]",
+          "  endfor",
+          "  arr[n] ← first",
+          "  return arr[1]"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "1"},
+            {"id": "イ", "text": "2"},
+            {"id": "ウ", "text": "3"},
+            {"id": "エ", "text": "5"}
+          ],
+          "answer": "イ",
+          "explanation": "{1,2,3,4,5} を左シフト → {2,3,4,5,1}。先頭値 1 を退避してから前へずらすのがポイント。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "n": 5, "first": 1 } },
+        "expectedTraceLength": { "min": 5, "max": 25 }
+      },
+      "explanation": {
+        "summary": "巡回シフト。先頭要素を退避しないと、左シフトの過程で値が消えてしまう。退避→ずらし→復元 の順序が肝。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0025",
+      "source": "generated",
+      "meta": {
+        "title": "完全なバブルソート",
+        "category": "sort",
+        "difficulty": 3,
+        "estimatedMinutes": 8,
+        "tags": ["ソート", "バブルソート", "二重ループ"],
+        "syntaxFeatures": ["for", "if", "array", "swap"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve はバブルソートで配列全体を昇順に並べ替える。実行後の arr[3] はいくつか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {3, 1, 4, 1, 5}",
+          "  整数型: i, j, temp, n",
+          "  n ← arrの要素数",
+          "  for (i を 1 から n - 1 まで 1 ずつ増やす)",
+          "    for (j を 1 から n - i まで 1 ずつ増やす)",
+          "      if (arr[j] > arr[j + 1])",
+          "        temp ← arr[j]",
+          "        arr[j] ← arr[j + 1]",
+          "        arr[j + 1] ← temp",
+          "      endif",
+          "    endfor",
+          "  endfor",
+          "  return arr[3]"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "1"},
+            {"id": "イ", "text": "3"},
+            {"id": "ウ", "text": "4"},
+            {"id": "エ", "text": "5"}
+          ],
+          "answer": "イ",
+          "explanation": "ソート後の配列は {1, 1, 3, 4, 5}。arr[3] = 3。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "n": 5 } },
+        "expectedTraceLength": { "min": 20, "max": 80 }
+      },
+      "explanation": {
+        "summary": "完全なバブルソート。外側ループ n-1 回 × 内側 n-i 回。内側の上限が i に依存する点（ソート済みエリアを範囲から外す）が効率化のポイント。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0026",
+      "source": "generated",
+      "meta": {
+        "title": "K番目に小さい値",
+        "category": "sort",
+        "difficulty": 3,
+        "estimatedMinutes": 8,
+        "tags": ["選択ソート", "部分ソート", "K番目"],
+        "syntaxFeatures": ["for", "if", "array", "swap"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve は配列の K 番目（K=3）に小さい値を返す（部分選択ソート）。戻り値はいくつか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {7, 2, 9, 4, 6, 1, 8, 3, 5}",
+          "  整数型: i, j, minIdx, temp",
+          "  整数型: k ← 3",
+          "  for (i を 1 から k まで 1 ずつ増やす)",
+          "    minIdx ← i",
+          "    for (j を i + 1 から arrの要素数 まで 1 ずつ増やす)",
+          "      if (arr[j] < arr[minIdx])",
+          "        minIdx ← j",
+          "      endif",
+          "    endfor",
+          "    temp ← arr[i]",
+          "    arr[i] ← arr[minIdx]",
+          "    arr[minIdx] ← temp",
+          "  endfor",
+          "  return arr[k]"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "1"},
+            {"id": "イ", "text": "2"},
+            {"id": "ウ", "text": "3"},
+            {"id": "エ", "text": "5"}
+          ],
+          "answer": "ウ",
+          "explanation": "選択ソートを 3 パスだけ実行すると、先頭 3 要素は最小から並ぶ。arr[1]=1, arr[2]=2, arr[3]=3。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "k": 3 } },
+        "expectedTraceLength": { "min": 25, "max": 80 }
+      },
+      "explanation": {
+        "summary": "部分ソートで K 番目の値を求める手法。完全ソートする必要がないため、K が小さければ高速。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0027",
+      "source": "generated",
+      "meta": {
+        "title": "配列の中央値（ソート利用）",
+        "category": "sort",
+        "difficulty": 3,
+        "estimatedMinutes": 7,
+        "tags": ["ソート", "中央値", "メディアン"],
+        "syntaxFeatures": ["for", "if", "array", "swap"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve は配列をソートしてから中央の要素を返す。戻り値はいくつか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {7, 3, 9, 1, 5}",
+          "  整数型: i, j, temp, n",
+          "  n ← arrの要素数",
+          "  for (i を 1 から n - 1 まで 1 ずつ増やす)",
+          "    for (j を 1 から n - i まで 1 ずつ増やす)",
+          "      if (arr[j] > arr[j + 1])",
+          "        temp ← arr[j]",
+          "        arr[j] ← arr[j + 1]",
+          "        arr[j + 1] ← temp",
+          "      endif",
+          "    endfor",
+          "  endfor",
+          "  return arr[(n + 1) ÷ 2]"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "3"},
+            {"id": "イ", "text": "5"},
+            {"id": "ウ", "text": "7"},
+            {"id": "エ", "text": "9"}
+          ],
+          "answer": "イ",
+          "explanation": "ソート後 {1, 3, 5, 7, 9}。中央は (5+1)÷2 = 3 番目、すなわち arr[3] = 5。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "n": 5 } },
+        "expectedTraceLength": { "min": 20, "max": 80 }
+      },
+      "explanation": {
+        "summary": "中央値はソート＋中央要素アクセス。奇数要素なら一意、偶数要素なら 2 つの平均をとるのが一般的（本問は奇数なので一意）。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0028",
+      "source": "generated",
+      "meta": {
+        "title": "ハノイの塔の手数",
+        "category": "loop",
+        "difficulty": 3,
+        "estimatedMinutes": 4,
+        "tags": ["数学", "累乗", "ハノイの塔"],
+        "syntaxFeatures": ["for", "multiplication"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve はハノイの塔で n 枚の円盤を移動するのに必要な最少手数（2^n - 1）を計算する。n=5 のとき戻り値はいくつか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型: n ← 5",
+          "  整数型: i, moves",
+          "  moves ← 1",
+          "  for (i を 1 から n まで 1 ずつ増やす)",
+          "    moves ← moves × 2",
+          "  endfor",
+          "  moves ← moves - 1",
+          "  return moves"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "15"},
+            {"id": "イ", "text": "31"},
+            {"id": "ウ", "text": "32"},
+            {"id": "エ", "text": "63"}
+          ],
+          "answer": "イ",
+          "explanation": "2^5 = 32。そこから 1 を引いて 31。ハノイの塔の最少手数は 2^n - 1（n 枚の円盤を移動）。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "moves": 31 } },
+        "expectedTraceLength": { "min": 5, "max": 20 }
+      },
+      "explanation": {
+        "summary": "ハノイの塔は再帰問題として有名だが、最少手数は閉じた形 2^n - 1 で求まる。再帰式 T(n) = 2T(n-1) + 1 を解いた結果。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0029",
+      "source": "generated",
+      "meta": {
+        "title": "クイックソートのパーティション",
+        "category": "sort",
+        "difficulty": 3,
+        "estimatedMinutes": 10,
+        "tags": ["ソート", "クイックソート", "パーティション", "Lomuto"],
+        "syntaxFeatures": ["for", "if", "array", "swap"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve はクイックソートのパーティション操作（Lomuto 方式の変形）を 1 回行う。pivot は arr[1]=5。実行後の pivot の最終位置はどこか。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: arr ← {5, 2, 8, 1, 9, 3, 7, 4, 6}",
+          "  整数型: pivot, i, temp, storeIdx",
+          "  pivot ← arr[1]",
+          "  storeIdx ← 1",
+          "  for (i を 2 から arrの要素数 まで 1 ずつ増やす)",
+          "    if (arr[i] < pivot)",
+          "      storeIdx ← storeIdx + 1",
+          "      temp ← arr[storeIdx]",
+          "      arr[storeIdx] ← arr[i]",
+          "      arr[i] ← temp",
+          "    endif",
+          "  endfor",
+          "  temp ← arr[1]",
+          "  arr[1] ← arr[storeIdx]",
+          "  arr[storeIdx] ← temp",
+          "  return storeIdx"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値（pivot の最終位置）はどれか。",
+          "choices": [
+            {"id": "ア", "text": "3"},
+            {"id": "イ", "text": "4"},
+            {"id": "ウ", "text": "5"},
+            {"id": "エ", "text": "6"}
+          ],
+          "answer": "ウ",
+          "explanation": "pivot=5 より小さい値（2,1,3,4）が左に集まる。storeIdx は最終的に 5 となり、pivot がそこに置かれる。これでクイックソート分割が完了。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "pivot": 5, "storeIdx": 5 } },
+        "expectedTraceLength": { "min": 15, "max": 60 }
+      },
+      "explanation": {
+        "summary": "クイックソートの核心であるパーティション。pivot より小さい要素を左、大きい要素を右に分け、最後に pivot を境界に据える。境界位置を返すのがこの関数の役目。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    },
+    {
+      "schemaVersion": 1,
+      "id": "fe-b-0030",
+      "source": "generated",
+      "meta": {
+        "title": "フィボナッチ数列（動的計画法）",
+        "category": "array",
+        "difficulty": 3,
+        "estimatedMinutes": 5,
+        "tags": ["動的計画法", "フィボナッチ", "メモ化"],
+        "syntaxFeatures": ["for", "array", "assignment"]
+      },
+      "problem": {
+        "statement": "次のプログラム solve は動的計画法で n 番目のフィボナッチ数を計算する。n=10 のとき戻り値はいくつか（fib[1]=1, fib[2]=1）。",
+        "pseudocode": [
+          "○整数型: solve()",
+          "  整数型の配列: fib ← {0, 0, 0, 0, 0, 0, 0, 0, 0, 0}",
+          "  整数型: i, n",
+          "  n ← 10",
+          "  fib[1] ← 1",
+          "  fib[2] ← 1",
+          "  for (i を 3 から n まで 1 ずつ増やす)",
+          "    fib[i] ← fib[i - 1] + fib[i - 2]",
+          "  endfor",
+          "  return fib[n]"
+        ]
+      },
+      "quiz": {
+        "questions": [{
+          "prompt": "戻り値はどれか。",
+          "choices": [
+            {"id": "ア", "text": "34"},
+            {"id": "イ", "text": "55"},
+            {"id": "ウ", "text": "89"},
+            {"id": "エ", "text": "144"}
+          ],
+          "answer": "イ",
+          "explanation": "fib: 1, 1, 2, 3, 5, 8, 13, 21, 34, 55。10 番目は 55。"
+        }]
+      },
+      "validation": {
+        "expectedFinalState": { "variables": { "n": 10 } },
+        "expectedTraceLength": { "min": 10, "max": 30 }
+      },
+      "explanation": {
+        "summary": "動的計画法（ボトムアップ）でフィボナッチを計算。再帰版は O(2^n) で爆発するが、配列で保存しながら計算すれば O(n)。これがメモ化の発想の出発点。"
+      },
+      "authoring": {
+        "author": "claude-opus-4-7-via-chat",
+        "createdAt": "2026-05-21T00:00:00Z",
+        "reviewStatus": "pending"
+      }
+    }
+  ]
+}

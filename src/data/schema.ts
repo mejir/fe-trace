@@ -19,4 +19,5 @@ export interface Question {
   choices: Choice[];                                // 選択肢（ア〜エ）
   answer: string;                                   // 正解ラベル
   explanation: string;                              // 解説文
+  statement?: string;                               // 問題文
 }

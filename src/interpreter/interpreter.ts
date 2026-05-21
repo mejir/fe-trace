@@ -439,8 +439,16 @@ class InterpreterEngine {
       case 'Literal':
         return expr.value as Value;
 
-      case 'Identifier':
+      case 'Identifier': {
+        // IPA擬似言語の「arrの要素数」表記をサポート
+        if (expr.name.endsWith('の要素数')) {
+          const arrName = expr.name.replace('の要素数', '');
+          const arr = this.readArray(arrName);
+          if (!arr) throw new InterpreterError(`未定義の配列: ${arrName}`, 0);
+          return arr.length;
+        }
         return this.readVariable(expr.name);
+      }
 
       case 'ArrayAccess':
         return this.evalArrayAccess(expr);

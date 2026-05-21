@@ -165,7 +165,10 @@ class Parser {
     // ボディ（■までの文列）
     // 関数ブロックの終了マーカー ■ で停止
     const body = this.parseBlock('END_FUNC');
-    this.expect('END_FUNC', '関数定義の終了');
+    // END_FUNCが省略されてEOFに到達した場合も許容する
+    if (this.check('END_FUNC')) {
+      this.expect('END_FUNC', '関数定義の終了');
+    }
     return { type: 'FuncDef', name, params, returnType, body, line };
   }
 
@@ -227,13 +230,14 @@ class Parser {
     this.pos++; // 型キーワードを消費
     this.expect('COLON', '変数宣言');
     const line = typeTok.line;
+    const isArrayType = typeTok.value.includes('の配列');
 
     // カンマ区切りで複数変数を宣言できる
     const decls: VarDecl[] = [];
-    decls.push(this.parseSingleVarDecl(line));
+    decls.push(this.parseSingleVarDecl(line, isArrayType));
 
     while (this.match('COMMA')) {
-      decls.push(this.parseSingleVarDecl(line));
+      decls.push(this.parseSingleVarDecl(line, isArrayType));
     }
 
     if (decls.length === 1) return decls[0];
@@ -246,18 +250,21 @@ class Parser {
   }
 
   /** 単一の変数/配列宣言をパース */
-  private parseSingleVarDecl(line: number): VarDecl {
+  private parseSingleVarDecl(line: number, isArrayType: boolean): VarDecl {
     const nameTok = this.expect('IDENT', '変数宣言');
     const name = nameTok.value;
 
-    // 配列宣言チェック
-    if (this.match('LBRACKET')) {
+    // 配列宣言チェック（型名に「の配列」が含まれる、または変数名に[]が付く）
+    if (isArrayType || this.match('LBRACKET')) {
       let size: number | undefined;
-      if (this.check('NUMBER')) {
-        size = Number(this.current().value);
-        this.pos++;
+      // [] の中身がある場合
+      if (this.tokens[this.pos - 1].type === 'LBRACKET') {
+        if (this.check('NUMBER')) {
+          size = Number(this.current().value);
+          this.pos++;
+        }
+        this.expect('RBRACKET', '配列宣言');
       }
-      this.expect('RBRACKET', '配列宣言');
 
       // 初期化 ← {1, 2, 3}
       if (this.match('ASSIGN')) {

@@ -121,6 +121,9 @@ export function tokenize(source: string): Token[] {
     if (ch === '≠') { advance(); addToken('NEQ', '≠', tokenLine); continue; }
     if (ch === '≦') { advance(); addToken('LEQ', '≦', tokenLine); continue; }
     if (ch === '≧') { advance(); addToken('GEQ', '≧', tokenLine); continue; }
+    if (ch === '≤') { advance(); addToken('LEQ', '≤', tokenLine); continue; }
+    if (ch === '≥') { advance(); addToken('GEQ', '≥', tokenLine); continue; }
+    if (ch === '%') { advance(); addToken('MOD', '%', tokenLine); continue; }
 
     // --- 半角記号 ---
     if (ch === '+') { advance(); addToken('PLUS', '+', tokenLine); continue; }
