@@ -67,7 +67,7 @@ function App() {
       </header>
 
       {/* メインコンテンツ */}
-      <main className="app-main">
+      <main className={`app-main ${mode}-mode`}>
         {screen === 'select' && (
           <QuestionSelector
             questions={mode === 'visualizer' ? sampleQuestions : practiceQuestions}
@@ -118,18 +118,20 @@ function TraceView({ question, mode }: TraceViewProps) {
   }
 
   return (
-    <>
+    <div className={`trace-view-container ${mode}-container`}>
       {mode === 'practice' && question.statement && (
-        <div className="practice-header" style={{ background: '#2a2a2a', padding: '16px', borderRadius: '8px', marginBottom: '16px' }}>
-          <h3>問題文</h3>
-          <p>{question.statement}</p>
+        <div className="practice-panel practice-statement">
+          <div className="practice-panel-header">📝 問題文</div>
+          <div className="practice-panel-body">
+            <p>{question.statement}</p>
+          </div>
         </div>
       )}
 
       <div className="trace-layout">
         <div className="code-section">
           <div className="panel">
-            <div className="panel-header">📝 擬似言語コード ─ {question.title}</div>
+            <div className="panel-header">💻 擬似言語コード ─ {question.title}</div>
             <div className="panel-body">
               <CodeViewer
                 lines={question.pseudocode}
@@ -158,7 +160,7 @@ function TraceView({ question, mode }: TraceViewProps) {
         </div>
       </div>
 
-      <div className="trace-controls-bar" style={{ marginTop: 16 }}>
+      <div className="trace-controls-bar">
         <StepControls
           currentIndex={currentIndex}
           totalSteps={totalSteps}
@@ -173,49 +175,49 @@ function TraceView({ question, mode }: TraceViewProps) {
       </div>
 
       {mode === 'practice' && question.choices && (
-        <div className="practice-quiz" style={{ background: '#2a2a2a', padding: '16px', borderRadius: '8px', marginTop: '16px' }}>
-          <h3>選択肢から答えを選んでください</h3>
-          <div className="choices" style={{ display: 'flex', gap: '10px', marginTop: '12px', flexWrap: 'wrap' }}>
-            {question.choices.map((c) => {
-              const isSelected = selectedAnswer === c.label;
-              const isCorrect = selectedAnswer && c.label === question.answer;
-              const isWrong = selectedAnswer && isSelected && c.label !== question.answer;
-              
-              let bgColor = '#444';
-              if (isCorrect) bgColor = '#28a745';
-              else if (isWrong) bgColor = '#dc3545';
-              else if (isSelected) bgColor = '#007bff'; // This shouldn't be reached if we reveal answer immediately
+        <div className="practice-panel practice-quiz">
+          <div className="practice-panel-header">🎯 選択肢から答えを選んでください</div>
+          <div className="practice-panel-body">
+            <div className="choices-grid">
+              {question.choices.map((c) => {
+                const isSelected = selectedAnswer === c.label;
+                const isCorrect = selectedAnswer && c.label === question.answer;
+                const isWrong = selectedAnswer && isSelected && c.label !== question.answer;
+                
+                let btnClass = 'choice-btn';
+                if (isCorrect) btnClass += ' choice-correct';
+                else if (isWrong) btnClass += ' choice-wrong';
+                else if (selectedAnswer) btnClass += ' choice-disabled';
+                else if (isSelected) btnClass += ' choice-selected';
 
-              return (
-                <button 
-                  key={c.label} 
-                  onClick={() => !selectedAnswer && setSelectedAnswer(c.label)}
-                  style={{
-                    padding: '12px 24px', 
-                    borderRadius: '4px', 
-                    border: 'none',
-                    background: bgColor,
-                    color: 'white',
-                    cursor: selectedAnswer ? 'default' : 'pointer',
-                    flex: '1 1 calc(50% - 10px)'
-                  }}
-                  disabled={!!selectedAnswer}
-                >
-                  <strong>{c.label}</strong>: {c.value}
-                </button>
-              );
-            })}
-          </div>
-
-          {selectedAnswer && (
-            <div className="practice-feedback" style={{ marginTop: '16px', padding: '16px', borderRadius: '4px', background: selectedAnswer === question.answer ? 'rgba(40, 167, 69, 0.2)' : 'rgba(220, 53, 69, 0.2)' }}>
-              <h4>{selectedAnswer === question.answer ? '🎉 正解！' : '❌ 不正解...'}</h4>
-              <p style={{ marginTop: '8px' }}><strong>解説:</strong> {question.explanation}</p>
+                return (
+                  <button 
+                    key={c.label} 
+                    className={btnClass}
+                    onClick={() => !selectedAnswer && setSelectedAnswer(c.label)}
+                    disabled={!!selectedAnswer}
+                  >
+                    <span className="choice-label">{c.label}</span>
+                    <span className="choice-value">{c.value}</span>
+                  </button>
+                );
+              })}
             </div>
-          )}
+
+            {selectedAnswer && (
+              <div className={`practice-feedback ${selectedAnswer === question.answer ? 'feedback-correct' : 'feedback-wrong'}`}>
+                <div className="feedback-header">
+                  {selectedAnswer === question.answer ? '🎉 正解！' : '❌ 不正解...'}
+                </div>
+                <div className="feedback-body">
+                  <strong>💡 解説:</strong> {question.explanation}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       )}
-    </>
+    </div>
   );
 }
 
